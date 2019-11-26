@@ -4,23 +4,8 @@ import FrankCoin from "./token/FrankCoin";
 import { messages } from "./constant";
 
 export default (bot: Telegraf<ContextMessageUpdate>) => {
-    bot.command('checkETHBalance', async ({ message, reply }) => {
-        console.info(message)
-        const parameters: string[] = message!.text!.split(" ").slice(1)
-        const [address] = parameters
-        // @todo: 对 address 用工具进行checksum
-        if (!address || address.length !== 42) reply(messages.INVALID_ADDRESS).catch()
-        else {
-            try {
-                const result = await getBalance(address)
-                reply(`Your account currently have ${fromWeiToEther(result)} ETH`).catch()
-            } catch (error) {
-                reply(`error happened: ` + error.toString()).catch()
-            }
-        }
-    })
-
-    bot.command('balanceOf', async ({ message, reply }) => {
+    // commands must be lowercase to be register in the telegram bot cmd list
+    bot.command('balanceof', async ({ message, reply }) => {
         console.info(message)
         const parameters: string[] = message!.text!.split(" ").slice(1)
         const [address] = parameters
